@@ -1,9 +1,6 @@
 package com.example.demo1.Q2;
 
-import java.lang.module.FindException;
-
 public class LinkedList{
-    public LinkedList cardDeck;
     private Node head;
     private Node tail;
     private int size;
@@ -11,55 +8,30 @@ public class LinkedList{
     public LinkedList() {
         this.size = 0;
     }
-    public LinkedList initialiseDeckOfCards() {
-        LinkedList cardDeck = new LinkedList();
-        String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
-        String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-        for (String suit : suits) {
-            for (String rank : ranks) {
-                Card card = new Card(rank,suit);
-                cardDeck.restoreCardtoDeck(card);
-            }
-        }
-        return cardDeck;
-    }
-
-
 
     public void addACard(String rank,String suit) {
-        int listSize = getSize();
-        if (listSize<=3){
-            Card card = new Card(rank,suit);
-            if (size == 0) {
+        Card card = new Card(rank,suit);
+        if (size == 0) {
 
-                Node node = new Node(card);
-                node.next = head;
-                head = node;
+            Node node = new Node(card);
+            node.next = head;
+            head = node;
 
-                if (tail == null) {
-                    tail = head;
-                }
-                size += 1;
-                cardDeck.removeCardFromDeck(card);
-            }else{
-                Node temp = head;
-                for (int i = 1; i < size; i++) {
-                    temp = temp.next;
-                }
-
-                Node node = new Node(card, temp.next);
-                temp.next = node;
-
-                size++;
-                cardDeck.removeCardFromDeck(card);
+            if (tail == null) {
+                tail = head;
             }
+            size += 1;
         }else{
-            System.out.println("Maximum 4 cards in a players hand");
-            System.out.println("Play a card first to remove a card from the hand");
+            Node temp = head;
+            for (int i = 1; i < size; i++) {
+                temp = temp.next;
+            }
+
+            Node node = new Node(card, temp.next);
+            temp.next = node;
+
+            size++;
         }
-
-
-
     }
 
 
@@ -121,6 +93,15 @@ public class LinkedList{
         }
         return -1;
     }
+    public int iterator(){
+        Node node = head;
+        int count=0;
+        while (node != null) {
+            node = node.next;
+            count++;
+        }
+        return count;
+    }
 
     public Node get(int index) {
         Node node = head;
@@ -160,62 +141,7 @@ public class LinkedList{
     public int getSize(){
         return size;
     }
-
-    public void removeCardFromDeck(Card value){
-        int index = find(value);
-        if (index == 0) {
-            Card val = head.value;
-            head = head.next;
-            if (head == null) {
-                tail = null;
-            }
-            size--;
-            return;
-        }if(index==-1){
-            System.out.println("invalid card");
-        }
-        Node prev = get(index - 1);
-        Card val = prev.next.value;
-
-        prev.next = prev.next.next;
-        size--;
     }
 
-    public void restoreCardtoDeck(Card cardvalue){
-        int listSize = getSize();
-        if (listSize<=51){
-            Card card = cardvalue;
-            if (size == 0) {
-
-                Node node = new Node(card);
-                node.next = head;
-                head = node;
-
-                if (tail == null) {
-                    tail = head;
-                }
-                size += 1;
-                cardDeck.removeCardFromDeck(card);
-            }else{
-                Node temp = head;
-                for (int i = 1; i < size; i++) {
-                    temp = temp.next;
-                }
-
-                Node node = new Node(card, temp.next);
-                temp.next = node;
-
-                size++;
-                cardDeck.removeCardFromDeck(card);
-            }
-        }else{
-            System.out.println("Maximum 4 cards in a players hand");
-            System.out.println("Play a card first to remove a card from the hand");
-        }
-
-
-
-    }
-}
 
 
