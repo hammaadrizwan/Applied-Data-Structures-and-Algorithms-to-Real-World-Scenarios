@@ -10,28 +10,34 @@ public class LinkedList{
     }
 
     public void addACard(String rank,String suit) {
-        Card card = new Card(rank,suit);
-        if (size == 0) {
+        if (suit.equals("Spades")||suit.equals("Diamonds")||suit.equals("Clubs")||suit.equals("Hearts")){
+            Card card = new Card(rank,suit);
+            if (size == 0) {
 
-            Node node = new Node(card);
-            node.next = head;
-            head = node;
+                Node node = new Node(card);
+                node.next = head;
+                head = node;
 
-            if (tail == null) {
-                tail = head;
+                if (tail == null) {
+                    tail = head;
+                }
+                size += 1;
+            }else{
+                Node temp = head;
+                for (int i = 1; i < size; i++) {
+                    temp = temp.next;
+                }
+
+                Node node = new Node(card, temp.next);
+                temp.next = node;
+
+                size++;
             }
-            size += 1;
+
         }else{
-            Node temp = head;
-            for (int i = 1; i < size; i++) {
-                temp = temp.next;
-            }
-
-            Node node = new Node(card, temp.next);
-            temp.next = node;
-
-            size++;
+            System.out.println("invalid Suit");
         }
+
     }
 
 
@@ -81,24 +87,24 @@ public class LinkedList{
         return val;
     }
 
-    public int find(Card value) {
-        Node node = head;
-        int count=0;
-        while (node != null) {
-            if (value.equals(node.value)) {
-                return count;
-            }
-            node = node.next;
-            count++;
-        }
-        return -1;
-    }
+
     public int iterator(){
         Node node = head;
         int count=0;
         while (node != null) {
             node = node.next;
             count++;
+        }
+        return count;
+    }
+    public int suitIterator(String suit) {
+        Node node = head;
+        int count=0;
+        while (node != null) {
+            if (suit.equals(node.value.getSuit())) {
+                count++;
+            }
+            node = node.next;
         }
         return count;
     }
@@ -115,6 +121,29 @@ public class LinkedList{
         Node nextVal = get(index+1);
         currentVal.value=val;
         currentVal.next=nextVal;
+    }
+    public void sortToDisplay(LinkedList playerHand){
+        for (int i =0;i<playerHand.getSize();i++){
+            for (int index =0;index<playerHand.getSize()-1;index++){
+                Card currentCard = playerHand.get(index).value;
+                Card nextCard = playerHand.get(index+1).value;
+                if (currentCard.getSuit().equals(nextCard.getSuit())){
+                    if (currentCard.rankValue(currentCard.getRank())>nextCard.rankValue(nextCard.getRank())){
+                        Card temp =currentCard;
+                        playerHand.set(index,nextCard);
+                        playerHand.set(index+1,temp);
+                    }
+                }else{
+                    if (currentCard.rankValue(currentCard.getRank())>nextCard.rankValue(nextCard.getRank())){
+                        Card temp =currentCard;
+                        playerHand.set(index,nextCard);
+                        playerHand.set(index+1,temp);
+                    }
+                }
+
+            }
+        }
+        displayList();
     }
 
 
