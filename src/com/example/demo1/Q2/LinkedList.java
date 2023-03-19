@@ -1,8 +1,11 @@
 package com.example.demo1.Q2;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class LinkedList{
-    private Node head;
-    private Node tail;
+    public Node head;
+    public Node tail;
     private int size;
 
     public LinkedList() {
@@ -67,6 +70,18 @@ public class LinkedList{
         }
         return null;
     }
+    public int find(String rank,String suit) {
+        int index = 0;
+        Node node = head;
+        while (node != null) {
+            if (node.value.getSuit().equals(suit)&&node.value.getRank().equals(rank)) {
+                return index;
+            }
+            node = node.next;
+            index++;
+        }
+        return -1;
+    }
 
     public Card delete(int index) {
         if (index == 0) {
@@ -122,28 +137,28 @@ public class LinkedList{
         currentVal.value=val;
         currentVal.next=nextVal;
     }
-    public void sortToDisplay(LinkedList playerHand){
+    public LinkedList sortToDisplay(LinkedList playerHand){
         for (int i =0;i<playerHand.getSize();i++){
             for (int index =0;index<playerHand.getSize()-1;index++){
                 Card currentCard = playerHand.get(index).value;
                 Card nextCard = playerHand.get(index+1).value;
                 if (currentCard.getSuit().equals(nextCard.getSuit())){
                     if (currentCard.rankValue(currentCard.getRank())>nextCard.rankValue(nextCard.getRank())){
-                        Card temp =currentCard;
+                        Card temp_card =currentCard;
                         playerHand.set(index,nextCard);
-                        playerHand.set(index+1,temp);
+                        playerHand.set(index+1,temp_card);
                     }
                 }else{
                     if (currentCard.rankValue(currentCard.getRank())>nextCard.rankValue(nextCard.getRank())){
-                        Card temp =currentCard;
+                        Card temp_card =currentCard;
                         playerHand.set(index,nextCard);
-                        playerHand.set(index+1,temp);
+                        playerHand.set(index+1,temp_card);
                     }
                 }
 
             }
         }
-        displayList();
+        return playerHand;
     }
 
 
@@ -158,19 +173,32 @@ public class LinkedList{
         return val;
     }
 
-    public void displayList() {
-        Node temp = head;
-        while (temp != null) {
-            Card card = temp.value;
-            System.out.print(card.getRank() +" "+ card.getSuit()+" ");
-            temp = temp.next;
-        }
-        System.out.println();
-    }
+
     public int getSize(){
         return size;
     }
+
+
+    public ArrayList<String> suitOrder(){
+        Node temp = head;
+        boolean suitExsists = false;
+        ArrayList<String> suitOrder = new ArrayList<>();
+        while (temp != null) {
+            Card card = temp.value;
+            String suit = card.getSuit();
+            for (String exsistingSuit:suitOrder) {
+                if (exsistingSuit.equals(suit)){
+                    suitExsists = true;
+                }
+            }
+            if (!suitExsists){
+                suitOrder.add(suit);
+            }
+            temp = temp.next;
+        }
+        return suitOrder;
     }
+}
 
 
 

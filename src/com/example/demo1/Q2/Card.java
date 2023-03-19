@@ -17,8 +17,8 @@ public class Card {
         return suit;
     }
 
-    public void displayCard(){
-        System.out.println(rank + " "+suit);
+    public String displayCard(){
+        return(rank + " "+suit);
     }
     public int rankValue(String rank) {
         if(rank.equals("Ace")){
