@@ -1,6 +1,7 @@
 package com.example.demo1.Q2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -85,12 +86,20 @@ public class Main {
                                 cardDeck.delete(index);//removes the card from the card pack
                                 players.get(playerChoice).addACard(rank, suit);//adds the card to the requested players Hand
                                 displayDeal(players);//display the card after added
-
+                                ArrayList<String> order;
                                 //IF ITS THE FINAL DEAL WE NEED TO SORT
                                 if (isThisAFinalDeal(players,numberOfMaxDeals(players))){
-                                    ArrayList<LinkedList> sortedBySuit = sortBySuit(players);//sorted by suit
-                                    ArrayList<LinkedList> sortedByRank = sortByRank(sortedBySuit);
-                                    displayDeal(sortedBySuit);
+                                    for (int i = 0; i < players.size(); i++) {
+                                        order = players.get(i).suitOrder();
+                                        for (String suit1:order){
+                                            System.out.print (suit1+"  ");
+                                        }
+                                        System.out.println();
+//                                        players.set(i,players.get(i).sortBySuit(players.get(i)));
+//                                        players.get(i).sortByRank();
+                                    }
+                                    displayDeal(players);
+
                                 }
 //
                             } else {
@@ -205,32 +214,16 @@ public class Main {
             System.out.println();
         }
     }
-    public static ArrayList<LinkedList> sortBySuit(ArrayList<LinkedList> players){
-        for (int i = 0; i < players.size(); i++) {
-            LinkedList playerHand = players.get(i);
-            LinkedList sortedHand = new LinkedList();
-            ArrayList<String> suitOrder = playerHand.suitOrder();
-            for (String suit : suitOrder) {
-                for (int cardPos = 0; cardPos < playerHand.getSize(); cardPos++) {
-                    if (playerHand.get(cardPos).value.getSuit().equals(suit)) {
-                        Card card = playerHand.get(cardPos).value;
-                        sortedHand.addACard(card.getRank(), card.getSuit());
-                    }
-                }
-            }
-            players.set(i, sortedHand);
-        }
-        return players;
-    }
 
-    public static ArrayList<LinkedList> sortByRank(ArrayList<LinkedList> players){
-        for (int handPosition = 0; handPosition < players.size(); handPosition++) {
-            LinkedList playerHand = players.get(handPosition);
-            LinkedList sortedByRank = playerHand.sortToDisplay(playerHand);
-            players.set(handPosition,sortedByRank);
-        }
-        return players;
-    }
+
+//    public static ArrayList<LinkedList> sortByRank(ArrayList<LinkedList> players){
+//        for (int handPosition = 0; handPosition < players.size(); handPosition++) {
+//            LinkedList playerHand = players.get(handPosition);
+//            LinkedList sortedByRank = playerHand.sortToDisplay(playerHand);
+//            players.set(handPosition,sortedByRank);
+//        }
+//        return players;
+//    }
 
 
 }

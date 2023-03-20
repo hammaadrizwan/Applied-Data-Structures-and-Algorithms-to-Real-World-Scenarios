@@ -2,6 +2,7 @@ package com.example.demo1.Q2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class LinkedList{
     public Node head;
@@ -137,29 +138,29 @@ public class LinkedList{
         currentVal.value=val;
         currentVal.next=nextVal;
     }
-    public LinkedList sortToDisplay(LinkedList playerHand){
-        for (int i =0;i<playerHand.getSize();i++){
-            for (int index =0;index<playerHand.getSize()-1;index++){
-                Card currentCard = playerHand.get(index).value;
-                Card nextCard = playerHand.get(index+1).value;
-                if (currentCard.getSuit().equals(nextCard.getSuit())){
-                    if (currentCard.rankValue(currentCard.getRank())>nextCard.rankValue(nextCard.getRank())){
-                        Card temp_card =currentCard;
-                        playerHand.set(index,nextCard);
-                        playerHand.set(index+1,temp_card);
-                    }
-                }else{
-                    if (currentCard.rankValue(currentCard.getRank())>nextCard.rankValue(nextCard.getRank())){
-                        Card temp_card =currentCard;
-                        playerHand.set(index,nextCard);
-                        playerHand.set(index+1,temp_card);
-                    }
-                }
-
-            }
-        }
-        return playerHand;
-    }
+//    public LinkedList sortToDisplay(LinkedList playerHand){
+//        for (int i =0;i<playerHand.getSize();i++){
+//            for (int index =0;index<playerHand.getSize()-1;index++){
+//                Card currentCard = playerHand.get(index).value;
+//                Card nextCard = playerHand.get(index+1).value;
+//                if (currentCard.getSuit().equals(nextCard.getSuit())){
+//                    if (currentCard.rankValue(currentCard.getRank())>nextCard.rankValue(nextCard.getRank())){
+//                        Card temp_card =currentCard;
+//                        playerHand.set(index,nextCard);
+//                        playerHand.set(index+1,temp_card);
+//                    }
+//                }else{
+//                    if (currentCard.rankValue(currentCard.getRank())>nextCard.rankValue(nextCard.getRank())){
+//                        Card temp_card =currentCard;
+//                        playerHand.set(index,nextCard);
+//                        playerHand.set(index+1,temp_card);
+//                    }
+//                }
+//
+//            }
+//        }
+//        return playerHand;
+//    }
 
 
 
@@ -181,23 +182,75 @@ public class LinkedList{
 
     public ArrayList<String> suitOrder(){
         Node temp = head;
+        int index=0;
         boolean suitExsists = false;
         ArrayList<String> suitOrder = new ArrayList<>();
         while (temp != null) {
             Card card = temp.value;
             String suit = card.getSuit();
-            for (String exsistingSuit:suitOrder) {
-                if (exsistingSuit.equals(suit)){
-                    suitExsists = true;
+            if (suitOrder.size()==0){
+                suitOrder.add(suit);//[Spades]
+                //return suitOrder;
+            }else{
+                for (String suitAvaliable:suitOrder) {
+                    if (suitAvaliable.equals(suit)){
+                        suitExsists=true;
+                        break;
+                    }
                 }
             }
-            if (!suitExsists){
-                suitOrder.add(suit);
-            }
+            if (suitExsists!=true){suitOrder.add(suit);}
             temp = temp.next;
         }
         return suitOrder;
     }
+
+    public void sortByRank()
+    {
+        // Node current will point to head
+        Node current = head, index = null;
+
+        Card temp;
+
+        if (head == null) {
+            return;
+        }
+        else {
+            while (current != null) {
+                // Node index will point to node next to
+                // current
+                index = current.next;
+
+                while (index != null) {
+                    // If current node's data is greater
+                    // than index's node data, swap the data
+                    // between them
+                    if (current.value.rankValue(current.value.getRank()) > index.value.rankValue(index.value.getRank())) {
+                        temp = current.value;
+                        current.value= index.value;
+                        index.value= temp;
+                    }
+
+                    index = index.next;
+                }
+                current = current.next;
+            }
+        }
+    }
+
+//    public LinkedList sortBySuit(LinkedList playerHand) {
+//        ArrayList<String> suitOrder = playerHand.suitOrder();
+//        LinkedList sortedHand = new LinkedList();
+//        for (String suit : suitOrder) {
+//            for (int cardPos = 0; cardPos < playerHand.getSize(); cardPos++) {
+//                if (playerHand.get(cardPos).value.getSuit().equals(suit)) {
+//                    Card card = playerHand.get(cardPos).value;
+//                    sortedHand.addACard(card.getRank(), card.getSuit());
+//                }
+//            }
+//        }
+//    }
+
 }
 
 
