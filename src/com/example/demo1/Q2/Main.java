@@ -45,18 +45,21 @@ public class Main {
         }
 
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter the number of players");
-        int noOfPlayers = input.nextInt();
+        int noOfPlayers;
+        do{
+            System.out.println("Enter the number of players");
+             noOfPlayers= input.nextInt();
+             if (noOfPlayers >= 52 || noOfPlayers <= 1){
+                 System.out.println("Unable to continue as cards should be distributed equally, enter a value below 52");
+             }
+        }while (noOfPlayers >= 52 || noOfPlayers <= 1);
 
-        if (noOfPlayers >= 52 || noOfPlayers <= 1) { //there should be more than one player and less than 52 players in order to distribute the cards equally
-            System.out.println("Unable to continue as cards should be distributed equally, enter a value below 52");
-        } else {
 
-            for (int playerNo = 1; playerNo <= noOfPlayers; playerNo++) {
-                LinkedList playerHand = new LinkedList();
-                players.add(playerHand);//creates locations to store the linkedlist of the players Hand.. player[<playerOneHand>,<playerTwoHand>,...,<playerNHand>]
-            }
+        for (int playerNo = 1; playerNo <= noOfPlayers; playerNo++) {
+            LinkedList playerHand = new LinkedList();
+            players.add(playerHand);//creates locations to store the linkedlist of the players Hand.. player[<playerOneHand>,<playerTwoHand>,...,<playerNHand>]
         }
+
 
         String functionOption;
         int playerChoice;
@@ -90,16 +93,11 @@ public class Main {
                                 //IF ITS THE FINAL DEAL WE NEED TO SORT
                                 if (isThisAFinalDeal(players,numberOfMaxDeals(players))){
                                     for (int i = 0; i < players.size(); i++) {
-                                        order = players.get(i).suitOrder();
-                                        for (String suit1:order){
-                                            System.out.print (suit1+"  ");
-                                        }
-                                        System.out.println();
-//                                        players.set(i,players.get(i).sortBySuit(players.get(i)));
-//                                        players.get(i).sortByRank();
+                                        players.get(i).sortByRank();
                                     }
+                                    System.out.println();
+                                    System.out.println("After sorting all hands");
                                     displayDeal(players);
-
                                 }
 //
                             } else {
