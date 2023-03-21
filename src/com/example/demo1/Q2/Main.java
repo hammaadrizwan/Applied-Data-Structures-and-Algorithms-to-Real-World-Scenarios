@@ -1,7 +1,6 @@
 package com.example.demo1.Q2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -89,15 +88,14 @@ public class Main {
                                 cardDeck.delete(index);//removes the card from the card pack
                                 players.get(playerChoice).addACard(rank, suit);//adds the card to the requested players Hand
                                 displayDeal(players);//display the card after added
-                                ArrayList<String> order;
                                 //IF ITS THE FINAL DEAL WE NEED TO SORT
                                 if (isThisAFinalDeal(players,numberOfMaxDeals(players))){
-                                    for (int i = 0; i < players.size(); i++) {
-                                        players.get(i).sortByRank();
+                                    for (int i = 0; i < players.size(); i++) {//Sorts the suit by order it was entered
+                                        players.get(i).sortBySuit(players.get(i).suitOrder());
                                     }
                                     System.out.println();
                                     System.out.println("After sorting all hands");
-                                    displayDeal(players);
+                                    displayDeal(players);//displays all hands after sorted
                                 }
 //
                             } else {
@@ -212,18 +210,7 @@ public class Main {
             System.out.println();
         }
     }
-
-
-//    public static ArrayList<LinkedList> sortByRank(ArrayList<LinkedList> players){
-//        for (int handPosition = 0; handPosition < players.size(); handPosition++) {
-//            LinkedList playerHand = players.get(handPosition);
-//            LinkedList sortedByRank = playerHand.sortToDisplay(playerHand);
-//            players.set(handPosition,sortedByRank);
-//        }
-//        return players;
-//    }
-
-
 }
+
 
 

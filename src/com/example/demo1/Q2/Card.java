@@ -20,7 +20,7 @@ public class Card {
     public String displayCard(){
         return(rank + " "+suit);
     }
-    public int rankValue(String rank) {
+    public int rankValue(String rank) {// converts the String to a integer of its repective value
         if(rank.equals("Ace")){
             return 14;
         } else if (rank.equals("King")) {
