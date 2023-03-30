@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
         BinaryTree binaryTree;
-        binaryTree = readFromFile("src/com/example/demo1/Q3/data.txt");// reads the words from the text file and populates the tree accordingly
+        binaryTree = readFromFile("src/com/example/demo1/Q2B/data.txt");// reads the words from the text file and populates the tree accordingly
 
         Scanner input = new Scanner(System.in);
 
