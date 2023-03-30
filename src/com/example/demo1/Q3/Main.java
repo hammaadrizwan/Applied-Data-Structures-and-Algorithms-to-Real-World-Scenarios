@@ -38,7 +38,6 @@ public class Main {
                 System.out.println(wordFound);
             }
             System.out.println();
-
         }
     }
 
@@ -137,38 +136,24 @@ public class Main {
     public static ArrayList<String> swapCharacter(BinaryTree binaryTree, String data){
         ArrayList<String> possibleWords = new ArrayList<>();
         char[] letters = data.toCharArray();
-//        StringBuilder sb = new StringBuilder(data);
-//        for (int i = 0; i < sb.length() - 1; i++) {
-//            char temp = sb.charAt(i);
-//            sb.setCharAt(i, sb.charAt(i + 1));
-//            sb.setCharAt(i + 1, temp);
-//            i++; // move to the next even/odd index
-//            if (binaryTree.find(sb.toString())!=(null)) {//if its found in the binary tree then this  could be a possible word
-//                possibleWords.add(sb.toString());
-//            }
-//        }
-
-        int i=0;
-        int j=0;
-        int swaps=0;
+        int inner=0;
+        int swaps=0;//this records the number of swaps
         while (swaps<letters.length){
-            letters = data.toCharArray();
-            if (j==letters.length-1){
-                char temp = letters[j];
-                letters[j]=letters[letters.length-1];
+            letters = data.toCharArray();//each time its sapped it resets to the original state to check if the word is in the BST.
+            if (inner==letters.length-1){//if j is one before the last index, then it swaps the last element with the before element, if we use the normal approach we get index out of bounds
+                char temp = letters[inner];
+                letters[inner]=letters[letters.length-1];
                 letters[letters.length-1]=temp;
             }else{
-                char temp = letters[j];
-                letters[j]=letters[j+1];
-                letters[j+1]=temp;
+                char temp = letters[inner];
+                letters[inner]=letters[inner+1];
+                letters[inner+1]=temp;
             }
-            swaps++;
-            i++;
-            j=i;
+            swaps++;//swaps increments by one
+            inner=swaps;//resets the innerloop to be the number of swaps, therby the inner value doesnt go out of bounds
             String newWord= new String(letters);
             if (binaryTree.find(newWord)!=(null)) {//if its found in the binary tree then this  could be a possible word
                 possibleWords.add(newWord);
-                return possibleWords;
             }
         }
         return possibleWords;
