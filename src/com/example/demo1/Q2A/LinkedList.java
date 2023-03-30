@@ -179,29 +179,6 @@ public class LinkedList{
         return size;
     }
 
-    public void sortBySuit(ArrayList<String> suitOrder){
-        for (String suit:suitOrder) {
-            Node current = head;
-            Node index = null;
-            Card temp;
-            while (current != null) {
-                index = current.next;
-
-                while (index != null) {
-                    if ((current.value.getSuit().equals(suit)&&index.value.getSuit().equals(suit))){
-                        if (current.value.rankValue(current.value.getRank()) > index.value.rankValue(index.value.getRank())) {
-                            temp = current.value;
-                            current.value= index.value;
-                            index.value= temp;
-                        }
-                    }
-
-                    index = index.next;
-                }
-                current = current.next;
-            }
-    }
-}
 
 
 }

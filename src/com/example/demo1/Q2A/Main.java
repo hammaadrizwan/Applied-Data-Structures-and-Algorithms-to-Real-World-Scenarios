@@ -1,6 +1,8 @@
 package com.example.demo1.Q2A;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -12,8 +14,8 @@ public class Main {
         String cardSuit;
         String cardRank;
 
-        String suit;
-        String rank;
+        Random random = new Random();
+
         //Intialises the 52 deck of cards
         for (int noOfSuit = 1; noOfSuit <= 4; noOfSuit++) {
             if (noOfSuit == 1) {
@@ -76,33 +78,20 @@ public class Main {
                 case "A": {//Adding a card this will run till there are no cards in deck. assuming only 4 players participate in the games
                     System.out.println("to which player, enter the number");
                     playerChoice = input.nextInt() - 1;
+
                     if ((playerChoice + 1) <= noOfPlayers) {
-                        System.out.println("Enter a rank and suit");
-                        System.out.println("Rank:");
-                        rank = input.next();
-                        System.out.println("Suit:");
-                        suit = input.next();
-                        if (isRankValid(rank) && isSuitValid(suit)) {//checks if the rank and suit entered are valid.
-                            if (cardDeck.find(rank, suit) > -1) {//finds the card in the cardDeck
-                                int index = cardDeck.find(rank, suit);// gets the index of that card
-                                cardDeck.delete(index);//removes the card from the card pack
-                                players.get(playerChoice).addACard(rank, suit);//adds the card to the requested players Hand
-                                displayDeal(players);//display the card after added
-                                //IF ITS THE FINAL DEAL WE NEED TO SORT
-                                if (isThisAFinalDeal(players,numberOfMaxDeals(players))){
-                                    for (int i = 0; i < players.size(); i++) {//Sorts the suit by order it was entered
-                                        players.get(i).sortBySuit(players.get(i).suitOrder());
-                                    }
-                                    System.out.println();
-                                    System.out.println("After sorting all hands");
-                                    displayDeal(players);//displays all hands after sorted
-                                }
-//
-                            } else {
-                                System.out.println("Card is not in deck, add another card");
-                            }
-                        } else {
-                            System.out.println("Invalid rank or suit");
+                        int cardPosition = random.nextInt((cardDeck.getSize()-1) - 0) + 0;
+                        Node cardToBeAdded = cardDeck.get(cardPosition);
+                        String rank = cardToBeAdded.value.getRank();
+                        String suit = cardToBeAdded.value.getSuit();
+                        cardDeck.delete(cardPosition);//removes the card from the card pack
+                        players.get(playerChoice).addACard(rank, suit);//adds the card to the requested players Hand
+                        displayDeal(players);//display the card after added
+
+                        //IF ITS THE FINAL DEAL WE NEED TO SORT
+                        if (isThisAFinalDeal(players,numberOfMaxDeals(players))){
+                            System.out.println("After sorting all hands");
+                            sortSuit(players);
                         }
                     } else {
                         System.out.println("Error: Only " + noOfPlayers + " are taking part in this game");
@@ -117,7 +106,7 @@ public class Main {
                     if ((playerChoice + 1) <= noOfPlayers) {
                         System.out.println("Enter the suit");
                         System.out.println("Suit:");
-                        suit = input.next();
+                        String suit = input.next();
                         if (isSuitValid(suit)) {
                             String cardDetails = players.get(playerChoice).playACard(suit).displayCard();
                             System.out.println("Card PLayed " + cardDetails);
@@ -147,7 +136,7 @@ public class Main {
                     playerChoice = input.nextInt() - 1;
                     if ((playerChoice + 1) <= noOfPlayers) {
                         System.out.println("Enter a suit");
-                        suit = input.next();
+                        String suit = input.next();
                         if (isSuitValid(suit)) {
                             int noOfCardsofSuit = players.get(playerChoice).suitIterator(suit);
                             System.out.println("No of " + suit + " " + noOfCardsofSuit);
@@ -158,6 +147,8 @@ public class Main {
                         System.out.println("Error: Only " + noOfPlayers + " are taking part in this game");
                     }
                     break;
+                case "Q":
+                    System.exit(0);
                 default:
                     System.out.println("Invalid Option");
             }
@@ -206,6 +197,48 @@ public class Main {
             for (int cards = 0; cards < playerHand.getSize(); cards++) {
                 String cardDetails = playerHand.get(cards).value.displayCard();
                 System.out.print(cardDetails + "  ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void sortSuit(ArrayList<LinkedList> players) {
+        for (int i = 0; i < players.size(); i++) {
+            LinkedList playerHand = players.get(i);
+            ArrayList<String> order =playerHand.suitOrder();
+
+            Card[] playerHandSorted = new Card[players.get(i).iterator()];
+            for (int j = 0; j < playerHandSorted.length; j++) {
+                Card card = players.get(i).get(j).value;
+                playerHandSorted[j] = card;
+            }
+
+            for (String suitOrder: order) {//Sort by suit
+                for (int outer = 0; outer < playerHandSorted.length; outer++) {
+                    for (int inner = 0; inner < playerHandSorted.length-1; inner++) {
+                        if (playerHandSorted[inner].getSuit().equals(suitOrder)&&!playerHandSorted[inner+1].getSuit().equals(suitOrder)){
+                            Card temp = playerHandSorted[inner];
+                            playerHandSorted[inner] = playerHandSorted[inner+1];
+                            playerHandSorted[inner+1] = temp;
+                        }
+
+                    }
+                }
+            }
+            for (int outer = 0; outer < playerHandSorted.length; outer++) {//sort by rank
+                for (int inner = 0; inner < playerHandSorted.length-1; inner++) {
+                    if (playerHandSorted[inner].getSuit().equals(playerHandSorted[inner+1].getSuit())){
+                        if(playerHandSorted[inner].rankValue(playerHandSorted[inner].getRank())>playerHandSorted[inner+1].rankValue(playerHandSorted[inner].getRank())){
+                            Card temp = playerHandSorted[inner];
+                            playerHandSorted[inner] = playerHandSorted[inner+1];
+                            playerHandSorted[inner+1] = temp;
+                        }
+                    }
+
+                }
+            }
+            for (Card sorted:playerHandSorted) {
+                System.out.print(sorted.displayCard()+"  ");
             }
             System.out.println();
         }
