@@ -1,4 +1,4 @@
-package com.example.demo1.Q3;
+package com.example.demo1.Q2B;
 
 public class BinaryTree {
     private Node root;//initially the tree has the root node

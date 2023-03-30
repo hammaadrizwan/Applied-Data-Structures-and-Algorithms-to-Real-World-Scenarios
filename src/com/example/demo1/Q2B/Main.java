@@ -1,8 +1,7 @@
-package com.example.demo1.Q3;
+package com.example.demo1.Q2B;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {

@@ -1,4 +1,4 @@
-package com.example.demo1.Q2;
+package com.example.demo1.Q2A;
 
 import java.util.ArrayList;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package com.example.demo1.Q3;
+package com.example.demo1.Q2B;
 
 public class Node {
     public String data;
