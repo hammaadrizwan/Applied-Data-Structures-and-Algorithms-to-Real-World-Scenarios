@@ -21,19 +21,14 @@ public class Card {
         return(rank + " "+suit);
     }
     public int rankValue(String rank) {// converts the String to a integer of its repective value
-        if(rank.equals("Ace")){
-            return 14;
-        } else if (rank.equals("King")) {
-            return 13;
-        } else if (rank.equals("Queen")) {
-            return 12;
-        } else if (rank.equals("Jack")) {
-            return 11;
+        int rankValue;
+        switch (rank) {
+            case "Ace" -> rankValue = 14;
+            case "King" -> rankValue = 13;
+            case "Queen" -> rankValue = 12;
+            case "Jack" -> rankValue = 11;
+            default -> rankValue = Integer.parseInt(rank);
         }
-        int rankValue = Integer.parseInt(rank);
-        if (rankValue>=2 && rankValue<=10){
-            return rankValue;
-        }
-        return -1;
+        return rankValue;
     }
 }

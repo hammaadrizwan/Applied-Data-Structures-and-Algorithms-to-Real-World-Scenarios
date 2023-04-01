@@ -225,13 +225,13 @@ public class Main {
                     }
                 }
             }
-            for (int outer = 0; outer < playerHandSorted.length; outer++) {//sort by rank
-                for (int inner = 0; inner < playerHandSorted.length-1; inner++) {
-                    if (playerHandSorted[inner].getSuit().equals(playerHandSorted[inner+1].getSuit())){
-                        if(playerHandSorted[inner].rankValue(playerHandSorted[inner].getRank())>playerHandSorted[inner+1].rankValue(playerHandSorted[inner].getRank())){
-                            Card temp = playerHandSorted[inner];
-                            playerHandSorted[inner] = playerHandSorted[inner+1];
-                            playerHandSorted[inner+1] = temp;
+            for (int j = 0; j < playerHandSorted.length; j++) {
+                for (int k = 0; k < playerHandSorted.length-1; k++) {
+                    if ((playerHandSorted[k].getSuit().equals(playerHandSorted[k+1].getSuit()))){
+                        if ((playerHandSorted[k].rankValue(playerHandSorted[k].getRank()))>(playerHandSorted[k+1].rankValue(playerHandSorted[k+1].getRank()))){
+                            Card temp = playerHandSorted[k];
+                            playerHandSorted[k] = playerHandSorted[k+1];
+                            playerHandSorted[k+1] = temp;
                         }
                     }
 
