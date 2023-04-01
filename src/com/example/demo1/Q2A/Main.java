@@ -225,7 +225,7 @@ public class Main {
                     }
                 }
             }
-            for (int j = 0; j < playerHandSorted.length; j++) {
+            for (int j = 0; j < playerHandSorted.length; j++) {//sort by Rank
                 for (int k = 0; k < playerHandSorted.length-1; k++) {
                     if ((playerHandSorted[k].getSuit().equals(playerHandSorted[k+1].getSuit()))){
                         if ((playerHandSorted[k].rankValue(playerHandSorted[k].getRank()))>(playerHandSorted[k+1].rankValue(playerHandSorted[k+1].getRank()))){
