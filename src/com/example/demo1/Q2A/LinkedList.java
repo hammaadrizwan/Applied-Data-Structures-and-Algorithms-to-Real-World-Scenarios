@@ -3,9 +3,9 @@ package com.example.demo1.Q2A;
 import java.util.ArrayList;
 
 public class LinkedList{
-    public Node head;
-    public Node tail;
-    private int size;
+    public Node head;//start pointer of the linked list
+    public Node tail;//tail poiter of the linkedList
+    private int size;//size of the list
 
     public LinkedList() {
         this.size = 0;
@@ -13,27 +13,27 @@ public class LinkedList{
 
     public void addACard(String rank,String suit) {
         if (suit.equals("Spades")||suit.equals("Diamonds")||suit.equals("Clubs")||suit.equals("Hearts")){
-            Card card = new Card(rank,suit);
-            if (size == 0) {
+            Card card = new Card(rank,suit);//creates a new card array of suit and rank
+            if (size == 0) {//if the list is empty create a new node and store the card in the node
 
                 Node node = new Node(card);
                 node.next = head;
-                head = node;
+                head = node;// the new node is sest to be the head node
 
-                if (tail == null) {
+                if (tail == null) {//add the tail to be the head
                     tail = head;
                 }
                 size += 1;
             }else{
-                Node temp = head;
+                Node temp = head;//stores the head node as a temporary node
                 for (int i = 1; i < size; i++) {
-                    temp = temp.next;
+                    temp = temp.next;//gets the last node entered,
                 }
 
-                Node node = new Node(card, temp.next);
-                temp.next = node;
+                Node node = new Node(card, temp.next);//the new node will store the card, and will point to null
+                temp.next = node;//the prevoius node now points to the new node
 
-                size++;
+                size++;// the size increases
             }
 
         }else{
@@ -47,23 +47,22 @@ public class LinkedList{
         int index=0;
         boolean cardFound=false;
         int listSize = getSize();
-        if (listSize==0){
+        if (listSize==0){//if the size of the list is empty there is no card to play
             System.out.println("No card to play, Add a card first.");
             return null;
         }else{
-            Node node = head;
+            Node node = head;//gets the first node in the list
             while (node != null) {
-                if (node.value.getSuit().equals(suit)) {
-                    Card removed = delete(index);
-                    return removed;
+                if (node.value.getSuit().equals(suit)) {//travereses in the list until it finds the node with the relavant suit
+                    Card removed = delete(index);//removes the node from the list
+                    return removed;//displays the card removed
                 }
                 node = node.next;
-                index++;
-
+                index++;//keeps a track of the nodes it visited
             }
         }
-        if (cardFound!=true){
-            Card removed = deleteFirst();
+        if (cardFound!=true){//if card is not found
+            Card removed = deleteFirst();//remove which ever card is available at first
             System.out.println(removed.getRank()+" "+removed.getSuit());
             return removed;
         }
@@ -73,7 +72,7 @@ public class LinkedList{
         int index = 0;
         Node node = head;
         while (node != null) {
-            if (node.value.getSuit().equals(suit)&&node.value.getRank().equals(rank)) {
+            if (node.value.getSuit().equals(suit)&&node.value.getRank().equals(rank)) {//to find the position of a specific card and retursn the index if found, else returns -1.(no card exsists)
                 return index;
             }
             node = node.next;
@@ -83,20 +82,19 @@ public class LinkedList{
     }
 
     public Card delete(int index) {
-        if (index == 0) {
-            Card val = head.value;
-            head = head.next;
+        if (index == 0) {//if index is zero, means remove the first element of the list
+            Card val = head.value;//value of head is being stored
+            head = head.next;//head is set to null since its removed
             if (head == null) {
                 tail = null;
-            }
-            size--;
+            }//both pointers are set to null
+            size--;//size of the list reduces by 1
             return val;
         }
+        Node prev = get(index - 1);//if its anyother index then we store the prvoius node
+        Card val = prev.next.value;//get the value to be deleted
 
-        Node prev = get(index - 1);
-        Card val = prev.next.value;
-
-        prev.next = prev.next.next;
+        prev.next = prev.next.next;//sets the prevoius node pointer to the next available position after deleting the node.
         size--;
         return val;
     }
@@ -105,7 +103,7 @@ public class LinkedList{
     public int iterator(){
         Node node = head;
         int count=0;
-        while (node != null) {
+        while (node != null) {//counts the number of nodes in the list
             node = node.next;
             count++;
         }
@@ -114,7 +112,7 @@ public class LinkedList{
     public int suitIterator(String suit) {
         Node node = head;
         int count=0;
-        while (node != null) {
+        while (node != null) {//same as iterator but checks for the number of nodes with the specific suit
             if (suit.equals(node.value.getSuit())) {
                 count++;
             }
@@ -129,12 +127,6 @@ public class LinkedList{
             node = node.next;
         }
         return node;
-    }
-    public void set(int index,Card val) {
-        Node currentVal = get(index);
-        Node nextVal = get(index+1);
-        currentVal.value=val;
-        currentVal.next=nextVal;
     }
 
     public ArrayList<String> suitOrder(){
@@ -178,8 +170,6 @@ public class LinkedList{
     public int getSize(){
         return size;
     }
-
-
 
 }
 
