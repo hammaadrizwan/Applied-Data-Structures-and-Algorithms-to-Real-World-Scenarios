@@ -19,7 +19,7 @@ public class Card {
 
     public String displayCard(){
         return(rank + " "+suit);
-    }
+    }//returns the card info
     public int rankValue(String rank) {// converts the String to a integer of its repective value
         int rankValue;
         switch (rank) {

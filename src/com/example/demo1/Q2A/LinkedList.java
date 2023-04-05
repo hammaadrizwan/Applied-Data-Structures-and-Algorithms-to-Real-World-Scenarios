@@ -16,7 +16,7 @@ public class LinkedList{
             Card card = new Card(rank,suit);//creates a new card array of suit and rank
             if (size == 0) {//if the list is empty create a new node and store the card in the node
 
-                Node node = new Node(card);
+                Node node = new Node(card,null);
                 node.next = head;
                 head = node;// the new node is sest to be the head node
 
@@ -122,7 +122,7 @@ public class LinkedList{
     }
 
     public Node get(int index) {
-        Node node = head;
+        Node node = head;//returns the node of that specific index
         for (int i = 0; i < index; i++) {
             node = node.next;
         }
@@ -130,23 +130,23 @@ public class LinkedList{
     }
 
     public ArrayList<String> suitOrder(){
-        ArrayList<String> allSuits = new ArrayList<>();
+        ArrayList<String> allSuits = new ArrayList<>();//this array list will store the order of suits
         Node node = head;
         String suit;
         while (node != null) {
             boolean suitExsists=false;
             Card card =node.value;
             suit=card.getSuit();
-            if (allSuits.size()==0){
+            if (allSuits.size()==0){//if this is the first card entered then its stored in the list containgin the order of the suit
                 allSuits.add(suit);
             }else{
-                for (String suitAvailable:allSuits){
+                for (String suitAvailable:allSuits){//a for loop checks if the new suit is available in the list of siuit then its not added
                     if (suit.equals(suitAvailable)){
                         suitExsists=true;
                     }
                 }
                 if (suitExsists!=true){
-                    allSuits.add(suit);
+                    allSuits.add(suit);//if not its inserted to the order of the suit
                 }
             }
 
@@ -158,18 +158,18 @@ public class LinkedList{
 
     public Card deleteFirst() {
         Card val = head.value;
-        head = head.next;
+        head = head.next;//deletes the head
         if (head == null) {
-            tail = null;
+            tail = null;//sets the tail to be null
         }
-        size--;
+        size--;//the size reduces by one
         return val;
     }
 
 
     public int getSize(){
         return size;
-    }
+    }// returns the size of the LinkedList
 
 }
 
